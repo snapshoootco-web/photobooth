@@ -1,29 +1,34 @@
-function takePhoto() {
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const context = canvas.getContext('2d');
+const snapButton = document.getElementById('snap');
+const filterSelect = document.getElementById('filter');
+const photos = document.getElementById('photos');
+const countdown = document.getElementById('countdown');
 
-  context.filter = filterSelect.value;
+// Access the webcam
+navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+  .then(stream => {
+    video.srcObject = stream;
+    video.play();
+  })
+  .catch(err => {
+    alert("Error accessing camera: " + err.message);
+  });
 
-  // Mirror the captured image
-  context.save();
-  context.translate(canvas.width, 0);
-  context.scale(-1, 1);
-  context.drawImage(video, 0, 0, canvas.width, canvas.height);
-  context.restore();
+// Countdown before snapping
+function startCountdown(seconds, callback) {
+  let count = seconds;
+  countdown.style.display = 'block';
+  countdown.textContent = count;
 
-  const imageDataURL = canvas.toDataURL('image/png');
-
-  const photoContainer = document.createElement('div');
-  const img = document.createElement('img');
-  img.src = imageDataURL;
-
-  const downloadBtn = document.createElement('a');
-  downloadBtn.textContent = '⬇️ Download';
-  downloadBtn.href = imageDataURL;
-  downloadBtn.download = 'snapshot.png';
-  downloadBtn.className = 'download-btn';
-
-  photoContainer.appendChild(img);
-  photoContainer.appendChild(downloadBtn);
-  photos.prepend(photoContainer);
-}
+  const interval = setInterval(() => {
+    count--;
+    if (count <= 0) {
+      clearInterval(interval);
+      countdown.style.display = 'none';
+      callback();
+    } else {
+      countdown.textContent = count;
+    }
+  }

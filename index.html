@@ -7,14 +7,36 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Snap and Shooot</h1>
+  <h1>Snapshooot</h1>
   <div class="booth">
+    <!-- Live video feed -->
     <video id="video" autoplay></video>
+    
+    <!-- Countdown timer -->
     <div id="countdown" class="countdown"></div>
 
+    <!-- Controls -->
     <div class="controls">
       <label for="filter">🎨 Filter:</label>
       <select id="filter">
         <option value="none">None</option>
         <option value="grayscale(1)">Grayscale</option>
-        <option value="sepia(1)">Sepia</opt
+        <option value="sepia(1)">Sepia</option>
+        <option value="invert(1)">Invert</option>
+        <option value="contrast(2)">High Contrast</option>
+      </select>
+
+      <button id="snap">📷 Take Photo</button>
+    </div>
+
+    <!-- Hidden canvas used for snapshot -->
+    <canvas id="canvas"></canvas>
+
+    <!-- Photo gallery -->
+    <div class="photos" id="photos"></div>
+  </div>
+
+  <!-- JavaScript functionality -->
+  <script src="script.js"></script>
+</body>
+</html>

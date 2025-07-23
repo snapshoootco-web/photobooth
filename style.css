@@ -1,7 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  background-color: #f0f0f0;
+  background-color: #0000FF;
   margin: 0;
   padding: 2rem;
 }
@@ -21,6 +21,7 @@ video, canvas {
   height: 480px;
   border: 2px solid #333;
   background: black;
+  transform: scaleX(-1);
 }
 
 .controls {
